@@ -1,9 +1,9 @@
-import React, { useState, useReducer } from "react"
+import React, { useState, useReducer, useEffect } from "react"
 import ReactDOM from "react-dom"
 import { BrowserRouter, Switch, Route } from "react-router-dom"
 import Axios from "axios"
 Axios.defaults.baseURL = "http://localhost:8080"
-// context： easy to share data throughout the entire application
+//Context： easy to share data throughout the entire application
 //Reducer:kepp all of our logic in one centrally located place
 //Immer: easy to work with complex objects in an immutalbbe fashion
 import { useImmerReducer } from "use-immer"
@@ -24,13 +24,19 @@ import FlashMessages from "./components/FlashMessages"
 function Main() {
   const initialState = {
     loggedIn: Boolean(localStorage.getItem("complexappToken")),
-    flashMessages: []
+    flashMessages: [],
+    user: {
+      token: localStorage.getItem("complexappToken"),
+      username: localStorage.getItem("complexappUsername"),
+      avatar: localStorage.getItem("complexappAvatar")
+    }
   }
 
   function ourReducer(draft, action) {
     switch (action.type) {
       case "login":
         draft.loggedIn = true
+        draft.user = action.data
         return
       case "logout":
         draft.loggedIn = false
@@ -42,6 +48,18 @@ function Main() {
   }
 
   const [state, dispatch] = useImmerReducer(ourReducer, initialState)
+
+  useEffect(() => {
+    if (state.loggedIn) {
+      localStorage.setItem("complexappToken", state.user.token)
+      localStorage.setItem("complexappUsername", state.user.username)
+      localStorage.setItem("complexappAvatar", state.user.avatar)
+    } else {
+      localStorage.removeItem("complexappToken")
+      localStorage.removeItem("complexappUsername")
+      localStorage.removeItem("complexappAvatar")
+    }
+  }, [state.loggedIn])
 
   return (
     <StateContext.Provider value={state}>
