@@ -15,15 +15,19 @@ function Profile() {
     counts: { postCount: "", followerCount: "", followingCount: "" }
   })
   useEffect(() => {
+    const userRequest = Axios.CancelToken.source()
     async function fetchData() {
       try {
-        const response = await Axios.post(`/profile/${username}`, { token: appState.user.token })
+        const response = await Axios.post(`/profile/${username}`, { token: appState.user.token }, { cancelToken: userRequest.token })
         setProfileData(response.data)
       } catch (e) {
-        console.log("There was a problem")
+        console.log("There was a problem or request is cancelled")
       }
     }
     fetchData()
+    return () => {
+      userRequest.cancel()
+    }
   }, [])
 
   return (
