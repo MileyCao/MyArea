@@ -2,9 +2,11 @@ import React, { useState, useReducer, useEffect } from "react"
 import ReactDOM from "react-dom"
 import { BrowserRouter, Switch, Route } from "react-router-dom"
 import Axios from "axios"
+import { CSSTransition } from "react-transition-group"
+
 Axios.defaults.baseURL = "http://localhost:8080"
 //Context： easy to share data throughout the entire application
-//Reducer:kepp all of our logic in one centrally located place
+//Reducer:keep all of our logic in one centrally located place
 //Immer: easy to work with complex objects in an immutalbbe fashion
 import { useImmerReducer } from "use-immer"
 import StateContext from "./StateContext"
@@ -104,7 +106,9 @@ function Main() {
               <NotFound />
             </Route>
           </Switch>
-          {state.isSearchOpen ? <Search /> : ""}
+          <CSSTransition timeout={330} in={state.isSearchOpen} classNames="search-overlay" unmountOnExit>
+            <Search />
+          </CSSTransition>
           <Footer />
         </BrowserRouter>
       </DispatchContext.Provider>
