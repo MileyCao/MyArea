@@ -22,7 +22,7 @@ function ProfilePosts(props) {
     return () => {
       ourRequest.cancel()
     }
-  }, [])
+  }, [username])
   if (isLoading) return <LoadingDotsIcon />
   return (
     <div className="list-group">
