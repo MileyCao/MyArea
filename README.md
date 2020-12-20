@@ -3,6 +3,6 @@ based on learn React course
 
 ![HomePage](Homepage.png)
 
-![mainPage](Mainpage.png)
+![mainPage](mainpage.png)
 
 ![authorPage](authorpage.png)
