@@ -20,8 +20,9 @@ function HeaderLoggedIn(props) {
         <i className="fas fa-search"></i>
       </a>
       <ReactTooltip place="bottom" id="search" className="custom-tooltip" />{" "}
-      <span onClick={() => appDispatch({ type: "toggleChat" })} data-for="chat" data-tip="Chat" className="mr-2 header-chat-icon text-dark">
+      <span onClick={() => appDispatch({ type: "toggleChat" })} data-for="chat" data-tip="Chat" className={"mr-2 header-chat-icon " + (appState.unreadChatCount ? "text-danger" : "text-dark")}>
         <i className="fas fa-comment"></i>
+        {appState.unreadChatCount ? <span className="mr-2 header-chat-icon text-dark">{appState.unreadChatCount < 10 ? appState.unreadChatCount : "9+"}</span> : ""}
         <span className="chat-count-badge text-dark"> </span>
       </span>
       <ReactTooltip place="bottom" id="chat" className="custom-tooltip" />{" "}
