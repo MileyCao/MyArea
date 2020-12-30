@@ -4,7 +4,7 @@ import { BrowserRouter, Switch, Route } from "react-router-dom"
 import Axios from "axios"
 import { CSSTransition } from "react-transition-group"
 
-Axios.defaults.baseURL = process.env.BACKENDURL || ""
+Axios.defaults.baseURL = process.env.BACKENDURL || "https://backendformyarea.herokuapp.com"
 //Context： easy to share data throughout the entire application
 //Reducer:keep all of our logic in one centrally located place
 //Immer: easy to work with complex objects in an immutalbbe fashion
